@@ -46,6 +46,39 @@ local plugins = {
 			require("better_escape").setup()
 		end,
 	},
+	{
+		"nvim-neotest/neotest",
+		cmd = { "Neotest", "NeotestSummary", "NeotestOutput" },
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/neotest-python",
+			"nvim-neotest/neotest-plenary",
+			"marilari88/neotest-vitest",
+		},
+		config = function()
+			require("neotest").setup({
+				adapters = {
+					require("neotest-python"),
+					require("neotest-plenary"),
+					require("neotest-vitest"),
+				},
+			})
+
+			vim.api.nvim_create_user_command("Neotest", function()
+				require("neotest").run.run(vim.fn.getcwd())
+			end, {})
+
+			vim.api.nvim_create_user_command("NeotestSummary", function()
+				require("neotest").summary.toggle()
+			end, {})
+
+			vim.api.nvim_create_user_command("NeotestOutput", function()
+				require("neotest").output_panel.toggle()
+			end, {})
+		end,
+	},
 
 	-- To make a plugin not be loaded
 	-- {
