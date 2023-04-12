@@ -13,3 +13,5 @@ g.mapleader = ","
 -- Relative Line Numbers
 wo.relativenumber = true
 
+-- Line wrap
+wo.wrap = false
